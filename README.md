@@ -14,6 +14,12 @@ A simple Python tool that analyzes login logs and identifies suspicious IP addre
 
 ---
 
+## 🛠️ Technologies Used
+
+* Python
+
+---
+
 ## 📄 Log Format
 
 ```
@@ -31,5 +37,16 @@ Example:
 
 * Prints suspicious IPs in order, in the terminal
 * Saves results to `Suspicious_ips.txt`
+
+---
+
+## 🚀 Future Improvements
+
+⏱️ Detect brute-force attacks based on rapid login attempts
+📊 Add data visualization (graphs of failed login trends)
+🖥️ Build a GUI dashboard for easier log analysis
+🌐 Support multiple log files and large-scale datasets
+🔍 Track additional events (usernames, ports, devices)
+📁 Organize outputs into structured reports (CSV/JSON export)
 
 ---
