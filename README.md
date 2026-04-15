@@ -44,7 +44,7 @@ Example:
 
 * Detect brute-force attacks based on rapid login attempts
 * Add data visualization (graphs of failed login trends)
-* Support multiple log files and large-scale datasets
+* Support multiple log files(Json, csv, txt, etc.) and large-scale datasets
 * Track additional events (usernames, ports, devices)
 * Organize outputs into structured reports (CSV/JSON export)
 
