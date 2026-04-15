@@ -42,11 +42,11 @@ Example:
 
 ## 🚀 Future Improvements
 
-⏱️ Detect brute-force attacks based on rapid login attempts
-📊 Add data visualization (graphs of failed login trends)
-🖥️ Build a GUI dashboard for easier log analysis
-🌐 Support multiple log files and large-scale datasets
-🔍 Track additional events (usernames, ports, devices)
-📁 Organize outputs into structured reports (CSV/JSON export)
+* Detect brute-force attacks based on rapid login attempts
+* Add data visualization (graphs of failed login trends)
+* Build a GUI dashboard for easier log analysis
+* Support multiple log files and large-scale datasets
+* Track additional events (usernames, ports, devices)
+* Organize outputs into structured reports (CSV/JSON export)
 
 ---
