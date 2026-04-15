@@ -1,2 +1,35 @@
-# Security-Log-Analyzer
-Given a Login log file, this program outputs suspicious IP addresses based on the number of failed attempts each has.
+# 🔐 Security Log Analyzer
+
+A simple Python tool that analyzes login logs and identifies suspicious IP addresses based on repeated failed login attempts.
+
+---
+
+## 📌 Features
+
+* Parses log files in `timestamp | IP | status` format
+* Counts failed login attempts per IP
+* Flags IPs with **3+ failures** as suspicious
+* Sorts results by most failed attempts
+* Outputs results to console and file
+
+---
+
+## 📄 Log Format
+
+```
+YYYY-MM-DD HH:MM:SS | IP_ADDRESS | STATUS
+```
+
+Example:
+
+```
+2026-05-04 08:15:23 | 192.168.1.10 | FAILED
+2026-05-04 08:15:23 | 192.168.1.32 | SUCCESS
+```
+
+## 📤 Output
+
+* Prints suspicious IPs in order, in the terminal
+* Saves results to `Suspicious_ips.txt`
+
+---
