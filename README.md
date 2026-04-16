@@ -7,6 +7,7 @@ A simple Python tool that analyzes login logs and identifies suspicious IP addre
 ## 📌 Features
 
 * Parses log files in `timestamp | IP | status` format
+* Support multiple log files(Json, csv, txt, etc.)
 * Counts failed login attempts per IP
 * Flags IPs with **3+ failures** as suspicious
 * Sorts results by most failed attempts
@@ -44,7 +45,7 @@ Example:
 
 * Detect brute-force attacks based on rapid login attempts
 * Add data visualization (graphs of failed login trends)
-* Support multiple log files(Json, csv, txt, etc.) and large-scale datasets
+* Support large-scale datasets
 * Track additional events (usernames, ports, devices)
 * Organize outputs into structured reports (CSV/JSON export)
 
