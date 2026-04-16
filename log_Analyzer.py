@@ -2,10 +2,13 @@
 # Date: 4/15/2026
 # Purpose: Security log analyzer for failed login attempts
 
-failed_attempts = {}
+import json, csv
 
-# Read file safely
-with open('log_Analyzer/logs.txt') as file:
+failed_attempts = {}
+base = "log_Analyzer/"
+
+# Read .txt file
+with open(base + 'logs.txt') as file:
     for line in file:
         parts = line.split('|')
 
@@ -18,10 +21,34 @@ with open('log_Analyzer/logs.txt') as file:
         status = parts[2].strip()
 
         if status == 'FAILED':
-            if ip not in failed_attempts:
-                failed_attempts[ip] = 0
-            
-            failed_attempts[ip] += 1
+            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+
+
+# Read .json file
+with open(base + 'logs.json') as file:
+    data = json.load(file)   # loads entire file into Python list
+
+    for entry in data:
+        timestamp = entry["timestamp"]
+        ip = entry["ip"]
+        status = entry["status"]
+
+        if status == 'FAILED':
+            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1 
+
+
+# Read .csv file
+with open(base + 'logs.csv') as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        timestamp = row["timestamp"]
+        ip = row["ip"]
+        status = row["status"]
+
+        if status == 'FAILED':
+            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+
 
 print("\nSuspicious IPs:")
 
@@ -34,7 +61,7 @@ for ip, count in sorted_ips:
         print(ip, "is suspicious with", count, "failed attempts")
 
 # Write results to file
-with open("log_Analyzer/Suspicious_ips.txt", "w") as output:
+with open("Suspicious_ips.txt", "w") as output:
     output.write("Suspicious IPs:\n")
 
     # Take all IPs and their failure counts, and sort them from most failed attempts to least
