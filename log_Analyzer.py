@@ -5,54 +5,60 @@
 import json, csv
 
 failed_attempts = {}
-base = "log_Analyzer/"
+base = "Security-Log-Analyzer/"
 
-# Read .txt file
-with open(base + 'logs.txt') as file:
-    for line in file:
-        parts = line.split('|')
+filename = input("Enter filename (logs.txt / logs.json / logs.csv): ")
+filepath = filename
 
-        # Skip malformed lines
-        if len(parts) < 3:
-            continue
+# --- TXT FILE ---
+if filename.endswith('.txt'):
+    with open(filepath) as file:
+        for line in file:
+            parts = line.split('|')
 
-        timestamp = parts[0].strip()
-        ip = parts[1].strip()
-        status = parts[2].strip()
+            if len(parts) < 3:
+                continue
 
-        if status == 'FAILED':
-            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+            timestamp = parts[0].strip()
+            ip = parts[1].strip()
+            status = parts[2].strip()
 
+            if status == 'FAILED':
+                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
-# Read .json file
-with open(base + 'logs.json') as file:
-    data = json.load(file)   # loads entire file into Python list
+# --- JSON FILE ---
+elif filename.endswith('.json'):
+    with open(filepath) as file:
+        data = json.load(file)
 
-    for entry in data:
-        timestamp = entry["timestamp"]
-        ip = entry["ip"]
-        status = entry["status"]
+        for entry in data:
+            timestamp = entry["timestamp"]
+            ip = entry["ip"]
+            status = entry["status"]
 
-        if status == 'FAILED':
-            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1 
+            if status == 'FAILED':
+                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
+# --- CSV FILE ---
+elif filename.endswith('.csv'):
+    with open(filepath) as file:
+        reader = csv.DictReader(file)
 
-# Read .csv file
-with open(base + 'logs.csv') as file:
-    reader = csv.DictReader(file)
+        for row in reader:
+            timestamp = row["timestamp"]
+            ip = row["ip"]
+            status = row["status"]
 
-    for row in reader:
-        timestamp = row["timestamp"]
-        ip = row["ip"]
-        status = row["status"]
+            if status == 'FAILED':
+                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
-        if status == 'FAILED':
-            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
-
+else:
+    print("This file is not supported, try another.")
+    exit()
 
 print("\nSuspicious IPs:")
 
-# Take all IPs and their failure counts, and sort them from most failed attempts to least
+# Sort by most failed attempts
 sorted_ips = sorted(failed_attempts.items(), key=lambda x: x[1], reverse=True)
 
 # Print suspicious IPs
@@ -64,10 +70,6 @@ for ip, count in sorted_ips:
 with open("Suspicious_ips.txt", "w") as output:
     output.write("Suspicious IPs:\n")
 
-    # Take all IPs and their failure counts, and sort them from most failed attempts to least
-    sorted_ips = sorted(failed_attempts.items(), key=lambda x: x[1], reverse=True)
-
     for ip, count in sorted_ips:
         if count >= 3:
-            line = f"{ip} is suspicious with {count} failed attempts\n"
-            output.write(line)
+            output.write(f"{ip} is suspicious with {count} failed attempts\n")
