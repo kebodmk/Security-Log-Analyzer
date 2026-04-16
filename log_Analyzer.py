@@ -5,7 +5,6 @@
 import json, csv
 
 failed_attempts = {}
-base = "Security-Log-Analyzer/"
 
 filename = input("Enter filename (logs.txt / logs.json / logs.csv): ")
 filepath = filename
@@ -57,6 +56,9 @@ try:
         exit()
 except FileNotFoundError:
     print("The file was not found, try another.")
+    exit()
+except json.JSONDecodeError:
+    print("Invalid JSON format.")
     exit()
 
 print("\nSuspicious IPs:")
