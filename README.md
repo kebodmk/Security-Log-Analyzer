@@ -47,6 +47,5 @@ Example:
 * Add data visualization (graphs of failed login trends)
 * Support large-scale datasets
 * Track additional events (usernames, ports, devices)
-* Organize outputs into structured reports (CSV/JSON export)
 
 ---
