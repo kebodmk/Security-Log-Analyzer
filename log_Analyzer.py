@@ -9,51 +9,54 @@ base = "Security-Log-Analyzer/"
 
 filename = input("Enter filename (logs.txt / logs.json / logs.csv): ")
 filepath = filename
-
+try:
 # --- TXT FILE ---
-if filename.endswith('.txt'):
-    with open(filepath) as file:
-        for line in file:
-            parts = line.split('|')
+    if filename.endswith('.txt'):
+        with open(filepath) as file:
+            for line in file:
+                parts = line.split('|')
 
-            if len(parts) < 3:
-                continue
+                if len(parts) < 3:
+                    continue
 
-            timestamp = parts[0].strip()
-            ip = parts[1].strip()
-            status = parts[2].strip()
+                timestamp = parts[0].strip()
+                ip = parts[1].strip()
+                status = parts[2].strip()
 
-            if status == 'FAILED':
-                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+                if status == 'FAILED':
+                    failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
-# --- JSON FILE ---
-elif filename.endswith('.json'):
-    with open(filepath) as file:
-        data = json.load(file)
+    # --- JSON FILE ---
+    elif filename.endswith('.json'):
+        with open(filepath) as file:
+            data = json.load(file)
 
-        for entry in data:
-            timestamp = entry["timestamp"]
-            ip = entry["ip"]
-            status = entry["status"]
+            for entry in data:
+                timestamp = entry["timestamp"]
+                ip = entry["ip"]
+                status = entry["status"]
 
-            if status == 'FAILED':
-                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+                if status == 'FAILED':
+                    failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
-# --- CSV FILE ---
-elif filename.endswith('.csv'):
-    with open(filepath) as file:
-        reader = csv.DictReader(file)
+    # --- CSV FILE ---
+    elif filename.endswith('.csv'):
+        with open(filepath) as file:
+            reader = csv.DictReader(file)
 
-        for row in reader:
-            timestamp = row["timestamp"]
-            ip = row["ip"]
-            status = row["status"]
+            for row in reader:
+                timestamp = row["timestamp"]
+                ip = row["ip"]
+                status = row["status"]
 
-            if status == 'FAILED':
-                failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+                if status == 'FAILED':
+                    failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
 
-else:
-    print("This file is not supported, try another.")
+    else:
+        print("This file is not supported, try another.")
+        exit()
+except FileNotFoundError:
+    print("The file was not found, try another.")
     exit()
 
 print("\nSuspicious IPs:")
